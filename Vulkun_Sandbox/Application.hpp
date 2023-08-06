@@ -25,6 +25,7 @@ class Application
 {
 	GLFWwindow* window;
 	VkInstance instance;
+	VkDebugUtilsMessengerEXT debugMessenger;
 	VkPhysicalDevice physicalDevice;
 	LogicalDevice device;
 	VkSurfaceKHR surface;
@@ -35,6 +36,15 @@ class Application
 	void Mainloop();
 	void Cleanup();
 	void CreateInstance();
+	std::vector<const char*> getRequiredExtensions(unsigned int* count);
+	static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
+		VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
+		VkDebugUtilsMessageTypeFlagsEXT messageType,
+		const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
+		void* pUserData);
+	void setupDebugMessenger();
+	VkResult CreateDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkDebugUtilsMessengerEXT* pDebugMessenger);
+	void DestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT debugMessenger, const VkAllocationCallbacks* pAllocator);
 	bool CheckValidationLayers(unsigned int size, const char** requested_layers);
 	void createSurface();
 	void pickPhysicalDevice();
